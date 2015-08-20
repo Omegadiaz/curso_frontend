@@ -27,6 +27,11 @@
 					Publicar
 				</a>
 			</div>
+			<div>
+				<a href="#14" class="sizer">A</a>
+				<a href="#16" class="sizer">A</a>
+				<a href="#20" class="sizer">A</a>
+			</div>
 		</div><!-- fin de titular -->
 		
 		<div class="usuario">
@@ -57,15 +62,15 @@
 	<form>
 		<p>
 			<label for="titulo">Título</label>
-			<input type="text" id="titulo" placeholder="Ingrese el título"></input>
+			<input type="text" id="titulo" name="titulo"placeholder="Ingrese el título"></input>
 		</p>
 		<p>
 			<label for="autor">Autor</label>
-			<input type="text" id="autor" placeholder="Ingrese el autor"></input>
+			<input type="text" id="autor" name="autor"placeholder="Ingrese el autor"></input>
 		</p>
 		<p>
 			<label for="tag">Tag</label>
-			<input type="text" id="tag" placeholder="Elija el tag"></input>
+			<input type="text" id="tag" name="tag"placeholder="Elija el tag"></input>
 		</p>
 		<input type="submit" value="Publicar"></submit>
 	</form>
@@ -290,10 +295,106 @@
 			$('form').on('submit', procesarForm);
 			function procesarForm(ev){
 				ev.preventDefault();
+				var titulo	= $('input[name=titulo]').val();
+				var autor 	= $('input[name=autor]').val();
+				var tag 	= $('input[name=tag]').val();
+				console.log(titulo);
+		
+			var template = '<article class="post"> \
+				<div class="descripcion"> \
+					<figure class="imagen"> \
+						<img src="imagenes/foto.jpg" /> \
+					</figure> \
+					<div class="detalles"> \
+						<h2 class="titulo"> \
+							'+titulo+' \
+						</h2> \
+						<p class="autor"> \
+							por <a href="#">'+autor+'</a> \
+						</p> \
+						<a href="#" class="tag">'+tag+'</a> \
+						<p class="fecha">hace <strong>20</strong> min</p> \
+					</div> \
+				</div> \
+				<div class="acciones"> \
+					<div class="votos"> \
+						<a class="up" href="#"></a> \
+						<span class="total">0</span> \
+						<a class="down" href="#"></a> \
+					</div> \
+					<div class="datos"> \
+						<a class="comentarios" href="#"> \
+							0 \
+						</a> \
+						<a class="estrellita" href="#"> \
+							 \
+						</a> \
+					</div> \
+				</div> \
+			</article>';
+
+			//$('.posts').prepend(template);
+			$('.posts').prepend($(template).fadeIn(600, function() 
+											{
+											$(this).css('display', 'inline-block');
+											}
+								));
+			$('input[type=text]').val('');//Borrar los input
+			$('form').slideUp(400);//Regresar arriba al pulsar submit
+			
 			}
-		});
+			function crearSizer(pixels){
+				return function(){
+					$('body').css('font-size', pixels+'px');
+				}
+			}
+
+			$('.sizer').each(function(i, link) {
+				var pixels = $(link).prop('hash').substring(1);
+				$(link)
+					.css('font-size', pixels+'px')
+					.on('click', crearSizer(pixels));
+
+			});
+
+		});//Fin de crear post y cambiar tamaño letra
 		
-		
+		function crearContador(valorInicial) {
+				var contador = valorInicial || 0;
+				return {
+					up : function() {
+						return ++contador;
+					},
+					down : function() {
+						return --contador;
+					}
+				};
+			};
+
+
+			$('.total').each(function(i, elem){ //Función anónima
+				var contTotal = crearContador(elem.innerHTML);//innerHTML= valor que tenía el elem
+				$(elem)
+					.siblings('.up')
+						.on('click', function(ev){
+							ev.preventDefault();
+							$(elem).html(contTotal.up());
+						})//Up funcionando
+				//$(elem)
+					.siblings('.down')
+						.on('click', function(ev){
+							ev.preventDefault();
+							$(elem).html(contTotal.down());
+						});//Fin de down
+			
+			
+			$('.posts').on('click', '.post', function(){
+						$(this).css({
+							'background' : 'red',
+							
+						});
+					});//Fin de background rojo
+			});//Fin de función anonima
 	</script>
 
 </body>
