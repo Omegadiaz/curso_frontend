@@ -332,8 +332,43 @@
 			$('form').slideUp(400);//Se oculta el formulario
 			}//END procesarForm
 
-
+			
 		});//END Function
+
+		function crearContador(valorInicial) {
+				var contador = valorInicial || 0;
+				return {
+					up : function() {
+						return ++contador;
+					},
+					down : function() {
+						return --contador;
+					}
+				};
+
+			};
+			$('.total').each(function(i, elem){ //Función anónima
+				var contTotal = crearContador(elem.innerHTML);//innerHTML= valor que tenía el elem
+				$(elem)
+					.siblings('.up')
+						.on('click', function(ev){
+							ev.preventDefault();
+							$(elem).html(contTotal.up());
+						})//Up funcionando
+				//$(elem)
+					.siblings('.down')
+						.on('click', function(ev){
+							ev.preventDefault();
+							$(elem).html(contTotal.down());
+						});//Fin de down
+
+			});//END Función anónima
+			$('.posts').on('click', '.post', function(){//Seleccion
+						$(this).css({
+							'background' : '#4Ff',
+							
+						});
+					});//Fin de selección
 	</script>
 
 </body>
