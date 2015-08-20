@@ -27,6 +27,11 @@
 					Publicar
 				</a>
 			</div>
+			<div>
+				<a href="#14" class="sizer">A</a>
+				<a href="#16" class="sizer">A</a>
+				<a href="#20" class="sizer">A</a>
+			</div>
 		</div><!-- fin de titular -->
 		
 		<div class="usuario">
@@ -363,12 +368,33 @@
 						});//Fin de down
 
 			});//END Función anónima
+
 			$('.posts').on('click', '.post', function(){//Seleccion
 						$(this).css({
 							'background' : '#4Ff',
+
 							
 						});
 					});//Fin de selección
+
+			function crearSizer(pixels) {
+				return function() {
+					$('body').css('font-size', pixels+'px');
+				}
+			};
+
+			$('.sizer').each(function(i, link) {
+				var pixels = $(link).prop('hash').substring(1);
+
+				$(link)
+					.css('font-size', pixels+'px');
+					debugger;
+				$(link)
+					.on('click', crearSizer(pixels));
+					});
+				
+			
+
 	</script>
 
 </body>
