@@ -3,6 +3,7 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="css/normalize.css" />
 	<link rel="stylesheet" type="text/css" href="css/puls4.css" />
+	<script src="jquery-2.1.4.min.js"></script>
 	<meta charset="utf-8">
 	<meta name="viewport" 
 	content="width=device-width, initial-scale=1, max-scale=1" />
@@ -53,7 +54,21 @@
 			
 		</ul>
 	</nav>
-
+	<form>
+		<p>
+			<label for="titulo">Título</label>
+			<input type="text" id="titulo" placeholder="Ingrese el título"></input>
+		</p>
+		<p>
+			<label for="autor">Autor</label>
+			<input type="text" id="autor" placeholder="Ingrese el autor"></input>
+		</p>
+		<p>
+			<label for="tag">Tag</label>
+			<input type="text" id="tag" placeholder="Elija el tag"></input>
+		</p>
+		<input type="submit" value="Publicar"></submit>
+	</form>
 	<section class="posts">
 		<article class="post">
 			<div class="descripcion">
@@ -266,6 +281,20 @@
 			</span>
 		</h3>
 	</footer>
+	<script type="text/javascript">
+		$(function() {
+			$('.publicar').on('click', mostrarForm);
+			function mostrarForm() {
+				$('form').slideToggle(400);
+			}
+			$('form').on('submit', procesarForm);
+			function procesarForm(ev){
+				ev.preventDefault();
+			}
+		});
+		
+		
+	</script>
 
 </body>
 </html>
